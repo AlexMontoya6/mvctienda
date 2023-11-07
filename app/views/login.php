@@ -13,7 +13,6 @@
         <h1 class="text-center">Login</h1>
     </div>
     <div class="card-body">
-        <?= $password = hash_hmac('sha512', 123456, ENCRIPTKEY); ?>
         <form action="<?= ROOT ?>login/verifyUser" method="POST">
             <div class="form-group text-left mb-2">
                 <label for="user">Usuario:</label>
