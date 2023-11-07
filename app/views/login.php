@@ -1,8 +1,10 @@
 <?php include_once 'header.php' ?>
-<?php if(isset($data['errors']) && count($data['errors']) > 0): ?>
+<?php if (isset($data['errors']) && count($data['errors']) > 0): ?>
     <div class="alert alert-danger mt-3">
         <?php foreach ($data['errors'] as $value): ?>
-            <strong><?= $value ?></strong><br>
+            <strong>
+                <?= $value ?>
+            </strong><br>
         <?php endforeach; ?>
     </div>
 <?php endif ?>
@@ -11,20 +13,19 @@
         <h1 class="text-center">Login</h1>
     </div>
     <div class="card-body">
+        <?= $password = hash_hmac('sha512', 123456, ENCRIPTKEY); ?>
         <form action="<?= ROOT ?>login/verifyUser" method="POST">
             <div class="form-group text-left mb-2">
                 <label for="user">Usuario:</label>
-                <input type="text" name="user" class="form-control"
-                       value="<?= $data['data']['user'] ?? '' ?>">
+                <input type="text" name="user" class="form-control" value="<?= $data['data']['user'] ?? '' ?>">
             </div>
             <div class="form-group text-left mb-2">
                 <label for="password">Contraseña:</label>
                 <input type="password" name="password" class="form-control"
-                       value="<?= $data['data']['password'] ?? '' ?>">
+                    value="<?= $data['data']['password'] ?? '' ?>">
             </div>
             <div class="form-group text-left mb-2">
-                <input type="checkbox" name="remember"
-                       <?= (isset($data['data']['remember']) && $data['data']['remember'] == 'on') ? 'checked' : '' ?>>
+                <input type="checkbox" name="remember" <?= (isset($data['data']['remember']) && $data['data']['remember'] == 'on') ? 'checked' : '' ?>>
                 <label for="remember">Recordar</label>
             </div>
             <div class="form-group text-left">
