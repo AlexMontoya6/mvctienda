@@ -5,6 +5,7 @@ class AdminUserController extends Controller
     private $model;
     private $errorsCreate = [];
     private $errorsUpdate = [];
+    private $errorsDelete = [];
 
     public function __construct()
     {
@@ -186,14 +187,10 @@ class AdminUserController extends Controller
 
     public function delete($id)
     {
-        $errors = [];
+
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $errors = $this->model->delete($id);
-
-            if (empty($errors)) {
-                header('location:' . ROOT . 'adminUser');
-            }
+            destroy($id);
         }
 
         $user = $this->model->getUserById($id);
@@ -202,7 +199,7 @@ class AdminUserController extends Controller
             'title' => 'Administración de usuarios - Eliminación',
             'menu' => false,
             'admin' => true,
-            'errors' => $errors,
+            'errors' => $this->errors,
             'status' => $status,
             'data' => $user,
         ];
@@ -211,9 +208,12 @@ class AdminUserController extends Controller
     }
 
 
-    private function destroy()
+    private function destroy($id)
     {
-
+        $this->errorsDelete = $this->model->delete($id);
+        if (empty($this->errorsDelete)) {
+            header('location:' . ROOT . 'adminUser');
+        }
     }
 
 
