@@ -114,6 +114,17 @@ class AdminUserController extends Controller
         }
     }
 
+    public function edit()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password1 = $_POST['password1'] ?? '';
+            $password2 = $_POST['password2'] ?? '';
+            $status = $_POST['status'] ?? '';
+        }
+    }
     public function update($id)
     {
         $errors = [];
