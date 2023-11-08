@@ -11,26 +11,23 @@ class ShopController extends Controller
 
     public function index()
     {
-        $session = new Session();
 
-        if ($session->getLogin()) {
 
-            $mostSold = $this->model->getMostSold();
-            $news = $this->model->getNews();
 
-            $data = [
-                'title' => 'Bienvenid@ a nuestra exclusiva tienda de productos',
-                'menu' => true,
-                'subtitle' => 'Artículos más vendidos',
-                'subtitle2' => 'Artículos nuevos',
-                'data' => $mostSold,
-                'news' => $news,
-            ];
+        $mostSold = $this->model->getMostSold();
+        $news = $this->model->getNews();
 
-            $this->view('shop/index', $data);
-        } else {
-            header('location:' . ROOT);
-        }
+        $data = [
+            'title' => 'Bienvenid@ a nuestra exclusiva tienda de productos',
+            'menu' => true,
+            'subtitle' => 'Artículos más vendidos',
+            'subtitle2' => 'Artículos nuevos',
+            'data' => $mostSold,
+            'news' => $news,
+        ];
+
+        $this->view('shop/index', $data);
+
     }
 
     public function logout()
@@ -97,12 +94,12 @@ class ShopController extends Controller
             if ($message == '') {
                 array_push($errors, 'El mensaje es requerido');
             }
-            if ( ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 array_push($errors, 'El correo electrónico no es válido');
             }
 
             if (count($errors) == 0) {
-                if ( $this->model->sendEmail($name, $email, $message)) {
+                if ($this->model->sendEmail($name, $email, $message)) {
                     $data = [
                         'title' => 'Mensaje de usuario',
                         'menu' => true,

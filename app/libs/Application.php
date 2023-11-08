@@ -10,7 +10,7 @@ class Application
     {
         $url = $this->separarURL();
 
-        if ( ! $this->urlController) {
+        if (!$this->urlController) {
 
             $this->defaultController();
 
@@ -20,10 +20,12 @@ class Application
             require_once '../app/controllers/' . $controller . '.php';
             $this->urlController = new $controller;
 
-            if (method_exists($this->urlController, $this->urlAction) &&
-                is_callable([$this->urlController, $this->urlAction])) {
+            if (
+                method_exists($this->urlController, $this->urlAction) &&
+                is_callable([$this->urlController, $this->urlAction])
+            ) {
 
-                if ( ! empty($this->urlParams) ) {
+                if (!empty($this->urlParams)) {
                     call_user_func_array([$this->urlController, $this->urlAction], $this->urlParams);
                 } else {
                     $this->urlController->{$this->urlAction}();
@@ -64,8 +66,8 @@ class Application
 
     private function defaultController()
     {
-        require_once '../app/controllers/LoginController.php';
-        $page = new LoginController();
+        require_once '../app/controllers/ShopController.php';
+        $page = new ShopController;
         $page->index();
     }
 
