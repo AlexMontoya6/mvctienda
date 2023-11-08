@@ -20,19 +20,18 @@
                             <?= $product->id ?>
                         </td>
                         <td>
-                            <?=
-                                $descripcion = $data['type'][$product->type - 1]->description;
-                            if (strlen($descripcion) > 30) {
-                                $descripcion = substr($descripcion, 0, 27) . '...';
-                            }
-
-                            ?>
+                            <?= $data['type'][$product->type - 1]->description ?>
                         </td>
                         <td>
                             <?= $product->name ?>
                         </td>
                         <td>
-                            <?= html_entity_decode($product->description) ?>
+                            <?=
+                                $descripcion = html_entity_decode($product->description);
+                            if (strlen($descripcion) > 30) {
+                                $descripcion = substr($descripcion, 0, 27) . '...';
+                            }
+                            ?>
                         </td>
                         <td><a href="<?= ROOT ?>adminProduct/update/<?= $product->id ?>" class="btn btn-info">Modificar</a>
                         </td>
