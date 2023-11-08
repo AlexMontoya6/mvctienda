@@ -113,6 +113,7 @@ class AdminUserController extends Controller
 
             return true;
         }
+        return false;
     }
 
     public function edit($id)
@@ -126,7 +127,34 @@ class AdminUserController extends Controller
             $status = $_POST['status'] ?? '';
 
             if (update($name, $email, $password1, $password2, $status)) {
+                $data = [
+                    'id' => $id,
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $password1,
+                    'status' => $status,
+                ];
+                $errors = $this->model->setUser($data);
 
+                if (empty($errors)) {
+                    header('location:' . ROOT . 'adminUser');
+                }
+
+            } else {
+                $user = $this->model->getUserById($id);
+                $status = $this->model->getConfig('adminStatus');
+
+                $data = [
+                    'title' => 'Administración de usuarios - Modificación',
+                    'menu' => false,
+                    'admin' => true,
+                    'errors' => $this->errorsUpdate,
+                    'status' => $status,
+                    'data' => $user,
+                ];
+
+                $this->view('admin/users/update', $data);
+            }
         }
     }
     private function update($name = '', $email = '', $password1 = '', $password2 = '', $status = '')
@@ -155,34 +183,8 @@ class AdminUserController extends Controller
 
             return true;
 
-            $data = [
-                'id' => $id,
-                'name' => $name,
-                'email' => $email,
-                'password' => $password1,
-                'status' => $status,
-            ];
-            $errors = $this->model->setUser($data);
-
-            if (empty($errors)) {
-                header('location:' . ROOT . 'adminUser');
-            }
-
         }
-
-        $user = $this->model->getUserById($id);
-        $status = $this->model->getConfig('adminStatus');
-
-        $data = [
-            'title' => 'Administración de usuarios - Modificación',
-            'menu' => false,
-            'admin' => true,
-            'errors' => $errors,
-            'status' => $status,
-            'data' => $user,
-        ];
-
-        $this->view('admin/users/update', $data);
+        return false;
 
     }
 
