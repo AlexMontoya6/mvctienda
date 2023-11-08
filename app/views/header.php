@@ -58,9 +58,19 @@
                             </button>
                         </form>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?= ROOT . 'shop/logout' ?>" class="nav-link">Salir</a>
-                    </li>
+                    <?php
+
+                    $session = new Session();
+
+                    if ($session->getLogin()) {
+                        // Si el usuario está logueado, muestra el enlace "Salir"
+                        echo '<li class="nav-item"><a href="' . ROOT . 'shop/logout" class="nav-link">Salir</a></li>';
+                    } else {
+                        // Si el usuario no está logueado, muestra el enlace "Iniciar Sesión"
+                        echo '<li class="nav-item"><a href="' . ROOT . 'login" class="nav-link">Iniciar Sesión</a></li>';
+                    }
+                    ?>
+
                 </ul>
             <?php endif; ?>
             <?php if (isset($data['admin']) && $data['admin']): ?>

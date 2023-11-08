@@ -11,10 +11,6 @@ class CoursesController extends Controller
 
     public function index()
     {
-
-
-
-
         $courses = $this->model->getCourses();
 
         $data = [
