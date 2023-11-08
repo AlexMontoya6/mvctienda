@@ -20,7 +20,13 @@
                             <?= $product->id ?>
                         </td>
                         <td>
-                            <?= $data['type'][$product->type - 1]->description ?>
+                            <?=
+                                $descripcion = $data['type'][$product->type - 1]->description;
+                            if (strlen($descripcion) > 30) {
+                                $descripcion = substr($descripcion, 0, 27) . '...';
+                            }
+
+                            ?>
                         </td>
                         <td>
                             <?= $product->name ?>
