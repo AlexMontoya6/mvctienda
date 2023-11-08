@@ -4,6 +4,7 @@ class AdminUserController extends Controller
 {
     private $model;
     private $errorsCreate = [];
+    private $errorsUpdate = [];
 
     public function __construct()
     {
@@ -114,7 +115,7 @@ class AdminUserController extends Controller
         }
     }
 
-    public function edit()
+    public function edit($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -123,50 +124,50 @@ class AdminUserController extends Controller
             $password1 = $_POST['password1'] ?? '';
             $password2 = $_POST['password2'] ?? '';
             $status = $_POST['status'] ?? '';
+
+            if (update($name, $email, $password1, $password2, $status)) {
+
         }
     }
-    public function update($id)
+    private function update($name = '', $email = '', $password1 = '', $password2 = '', $status = '')
     {
-        $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $name = $_POST['name'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $password1 = $_POST['password1'] ?? '';
-            $password2 = $_POST['password2'] ?? '';
-            $status = $_POST['status'] ?? '';
 
-            if (empty($name)) {
-                array_push($errors, 'El nombre de usuario es requerido');
+
+        if (empty($name)) {
+            array_push($this->errorsUpdate, 'El nombre de usuario es requerido');
+        }
+        if (empty($email)) {
+            array_push($this->errorsUpdate, 'El email del usuario es requerido');
+        }
+        if ($status == '') {
+            array_push($$this->errorsUpdate, 'Selecciona el estado del usuario');
+        }
+        if (!empty($password1) || !empty($password2)) {
+            if ($password1 != $password2) {
+                array_push($this->errorsUpdate, 'Las contraseñas no coinciden');
             }
-            if (empty($email)) {
-                array_push($errors, 'El email del usuario es requerido');
-            }
-            if ($status == '') {
-                array_push($errors, 'Selecciona el estado del usuario');
-            }
-            if (!empty($password1) || !empty($password2)) {
-                if ($password1 != $password2) {
-                    array_push($errors, 'Las contraseñas no coinciden');
-                }
-            }
+        }
+
+        if (empty($this->errorsUpdate)) {
+
+
+            return true;
+
+            $data = [
+                'id' => $id,
+                'name' => $name,
+                'email' => $email,
+                'password' => $password1,
+                'status' => $status,
+            ];
+            $errors = $this->model->setUser($data);
 
             if (empty($errors)) {
-
-                $data = [
-                    'id' => $id,
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => $password1,
-                    'status' => $status,
-                ];
-                $errors = $this->model->setUser($data);
-
-                if (empty($errors)) {
-                    header('location:' . ROOT . 'adminUser');
-                }
+                header('location:' . ROOT . 'adminUser');
             }
+
         }
 
         $user = $this->model->getUserById($id);
