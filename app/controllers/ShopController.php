@@ -39,6 +39,7 @@ class ShopController extends Controller
 
     public function show($id, $back = '')
     {
+        //Se la podria quitar pero vamos a ver el siguiente commit si lo hago o no
         $session = new Session();
 
         $product = $this->model->getProductById($id);
