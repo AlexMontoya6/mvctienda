@@ -9,6 +9,13 @@ class AdminShopController extends Controller
         $this->model = $this->model('AdminShop');
     }
 
+    public function logout()
+    {
+        $session = new Session();
+        $session->logout();
+        header('location:' . ROOT . 'admin');
+    }
+
     public function index()
     {
         $session = new Session();
