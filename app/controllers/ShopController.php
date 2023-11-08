@@ -59,20 +59,16 @@ class ShopController extends Controller
 
     public function whoami()
     {
-        $session = new Session();
 
-        if ($session->getLogin()) {
 
-            $data = [
-                'title' => 'Quienes somos',
-                'menu' => true,
-                'active' => 'whoami',
-            ];
+        $data = [
+            'title' => 'Quienes somos',
+            'menu' => true,
+            'active' => 'whoami',
+        ];
 
-            $this->view('shop/whoami', $data);
-        } else {
-            header('location:' . ROOT);
-        }
+        $this->view('shop/whoami', $data);
+
     }
 
     public function contact()
@@ -137,21 +133,19 @@ class ShopController extends Controller
                 $this->view('shop/contact', $data);
             }
         } else {
-            $session = new Session();
 
-            if ($session->getLogin()) {
 
-                $data = [
-                    'title' => 'Contacta con nosotros',
-                    'menu' => true,
-                    'active' => 'contact',
-                ];
 
-                $this->view('shop/contact', $data);
 
-            } else {
-                header('location:' . ROOT);
-            }
+            $data = [
+                'title' => 'Contacta con nosotros',
+                'menu' => true,
+                'active' => 'contact',
+            ];
+
+            $this->view('shop/contact', $data);
+
+
         }
     }
 }
