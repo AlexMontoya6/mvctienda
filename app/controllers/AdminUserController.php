@@ -160,9 +160,6 @@ class AdminUserController extends Controller
     private function update($name = '', $email = '', $password1 = '', $password2 = '', $status = '')
     {
 
-
-
-
         if (empty($name)) {
             array_push($this->errorsUpdate, 'El nombre de usuario es requerido');
         }
@@ -180,9 +177,7 @@ class AdminUserController extends Controller
 
         if (empty($this->errorsUpdate)) {
 
-
             return true;
-
         }
         return false;
 
@@ -214,4 +209,17 @@ class AdminUserController extends Controller
 
         $this->view('admin/users/delete', $data);
     }
+
+
+    private function destroy()
+    {
+
+    }
+
+
+
+
+
+
+
 }
